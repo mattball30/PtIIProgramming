@@ -117,12 +117,13 @@ class System(np.ndarray):
         self[i] = self[i] - dummy[0]
     
     # outputting our data as an XYZ file: 
+    '''
     with open("output.txt", "w") as txt_file:
         txt_file.write(str(len(self))+'\n')
         txt_file.write('The lowest energy conformation for '+str(len(self))+' particles with the Lennard-Jones potential:'+'\n')
         for i in range(len(self)):
             txt_file.write('Particle' + str(i) + '  ' + str(self[i][0]) + ' ' + str(self[i][1]) + ' ' + str(self[i][2])  + "\n") # works with any number of elements in a line
-
+'''
     return self
 
 # defining the program to run this code: 
@@ -137,11 +138,22 @@ def prog():
             continue 
 
         X = System(x).start()
-        delta , lam = float(input('Delta = ')), float(input('Lambda = '))
-        pot = input('Enter the potential for the system (either LJ or morse) = ') 
-        break
+        while True:
+            try: 
+                delta , lam = float(input('Delta = ')), float(input('Lambda = '))
+
+            except ValueError: 
+                print('Please enter valid numbers as inputs')
+                continue
+            
+            pot = input('Enter the potential for the system (either LJ or morse) = ')
+            if pot != 'LJ' or 'morse':  
+                print('Please type a valid potential')
+                continue
+                
+            break
         
-    return X.opt(pot, lam, delta)
+        return X.opt(pot, lam, delta)
 
 
 prog() 
