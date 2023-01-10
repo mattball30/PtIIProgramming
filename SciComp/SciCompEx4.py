@@ -31,13 +31,14 @@ class System(np.ndarray):
   def __new__(cls, n):
     pos = np.array(np.zeros((n,3)), dtype=float)
     x = np.ndarray.__new__(cls, shape=(n,3), dtype=float, buffer=pos)
+
     return x
 
   #generating our starting positions for the optimisation
   def start(self): 
     n = len(self)
     for i in range(n): 
-        self[i] = vec((random.uniform(-1.3,1.3), random.uniform(-1.3,1.3), random.uniform(-1.3,1.3)))
+        self[i] = np.array((random.uniform(-1.3,1.3), random.uniform(-1.3,1.3), random.uniform(-1.3,1.3)))
     return self
   
   # generating the energies of the system based on the ij interactions. 
